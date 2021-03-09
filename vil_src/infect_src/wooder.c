@@ -107,8 +107,8 @@ int			write_string(char *ptr, off_t size, char *filename, int fd)
 		fprintf(stdout, BOLDRED"<"CYAN"o"RED">"RESET YELLOW" stuff in ["RED"%x"YELLOW"]\n"RESET, endSegment);
 	if (endSegment)
 	{
-		// memmove(ptr + endSegment, message, strlen(message));
-		// write(fd, ptr, size);
+		memmove(ptr + endSegment, message, strlen(message));
+		write(fd, ptr, size);
 	}
 	if (visual)
 		fprintf(stdout, BOLDRED"<"CYAN"o"RED">"RESET YELLOW" success \\o/  :  "CYAN"%s\n"RESET, filename);

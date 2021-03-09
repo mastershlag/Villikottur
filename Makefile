@@ -5,13 +5,15 @@ NAME			=	vil
 OBJ_DIR			=	./vil_obj/
 
 SRC_SEEKAT_DIR	=	./vil_src/seekat_src/
-SRC_INFECT_DIR	= ./vil_src/infect_src/
+SRC_INFECT_DIR	=	./vil_src/infect_src/
 
 ifeq ($(OS), Linux)
 SRC_SEEKAT		=	seekat_detector.c\
 					seekat.c\
 					seekat_printer.c\
 					seekat_tools.c\
+					seekat_sonar.c\
+					seekat_flags.c\
 					seekat_tools_linux.c
 endif
 ifeq ($(OS), Darwin)
@@ -19,6 +21,8 @@ SRC_SEEKAT		=	seekat_detector.c\
 					seekat.c\
 					seekat_printer.c\
 					seekat_tools.c\
+					seekat_sonar.c\
+					seekat_flags.c\
 					seekat_tools_darwin.c
 endif
 

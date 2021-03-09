@@ -147,3 +147,23 @@ int		IsMachO(char *name)
 	close(fd);
 	return 1;
 }
+
+char	*ft_ona(char *lol)
+{
+	int i;
+	int j;
+	int safety;
+
+	i = -1;
+	j = 0;
+	safety = 0;
+	while (lol[++i])
+		if (lol[i] == '/')
+		{
+			j = i + 1;
+			safety = 1;
+		}
+	if (safety)
+		return (lol + j);
+	return (lol);
+}

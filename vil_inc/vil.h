@@ -57,22 +57,46 @@ typedef struct	s_basiks
 }				t_basiks;
 
 
+// ############################################################
+                      // SEEKAT_DETECTOR
+// ############################################################
 char			**ft_dirdetector(int c, char **v);
-int				ft_printer(t_stock *stock, int lvl);
-int				ft_basic(t_stock *stock);
-void			free_stock(t_stock *stock);
+
+// ############################################################
+                        // SEEKAT_SONAR
+// ############################################################
 int				ft_sonar(t_stock *stock, int i);
+
+// ############################################################
+                       // SEEKAT_PRINTER
+// ############################################################
+void			ELF_handler(char *tmp);
+int				ft_printer(t_stock *stock, int lvl);
+
+// ############################################################
+                        // SEEKAT_TOOLS
+// ############################################################
+char			*ft_ona(char *lol);
+void			free_output(t_stock *stock);
+void			free_dirt(t_stock *stock);
+int				IsMachO(char *name);
+int				IsSO_or_EXEC(char *name);
+int				IsELF(char *name);
 int				is_dir(char *name);
 int				is_file(char *name);
-void			print_stock(t_stock *stock);
 int				is_truedir(char *test);
 int				ft_islink(char *path, char **buf, int ret);
-int				IsELF(char *name);
-int				IsSO_or_EXEC(char *name);
-int				IsMachO(char *name);
-void			free_dirt(t_stock *stock);
-void			free_output(t_stock *stock);
+void			free_stock(t_stock *stock);
 
+// ############################################################
+                           // WOODER
+// ############################################################
 int				file_checker(char *filename);
+
+// ############################################################
+                        // SEEKAT_FLAGS
+// ############################################################
+int			flagchecker(t_stock* stock);
+
 
 #endif

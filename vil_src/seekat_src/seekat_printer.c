@@ -40,6 +40,27 @@ static int	ft_printerrdir(t_stock *explorer, char *tmp)
 	return (0);
 }
 
+void		ELF_handler(char *tmp)
+{
+	int ret = IsSO_or_EXEC(tmp);
+	if (ret == 1)
+	{
+		if ((everyone || only_so) && visual)
+			printf(BOLDRED"<"BOLDCYAN"o"BOLDRED"> "RESET BLUE"{"YELLOW"%s"BLUE"}\n"RESET, tmp);
+		so_cpt++;
+	}
+	else if (ret == 2)
+	{
+		if ((everyone || only_exe) && visual)
+			printf(BOLDRED"<"BOLDGREEN"o"BOLDRED"> "RESET BLUE"{"YELLOW"%s"BLUE"}\n"RESET, tmp);
+		exec_cpt++;
+	}
+	else if ((everyone || only_elf) && visual)
+			printf(BOLDRED"<o> "RESET BLUE"{"YELLOW"%s"BLUE"}\n"RESET, tmp);
+	file_checker(tmp);
+	elf_cpt++;
+}
+
 int			ft_printer(t_stock *stock, int lvl)
 {
 	int		i;
@@ -69,23 +90,7 @@ int			ft_printer(t_stock *stock, int lvl)
 		{
 			if (IsELF(tmp))
 			{
-				int ret = IsSO_or_EXEC(tmp);
-				if (ret == 1)
-				{
-					if ((everyone || only_so) && visual)
-						printf(BOLDRED"<"BOLDCYAN"o"BOLDRED"> "RESET BLUE"{"YELLOW"%s"BLUE"}\n"RESET, tmp);
-					so_cpt++;
-				}
-				else if (ret == 2)
-				{
-					if ((everyone || only_exe) && visual)
-						printf(BOLDRED"<"BOLDGREEN"o"BOLDRED"> "RESET BLUE"{"YELLOW"%s"BLUE"}\n"RESET, tmp);
-					exec_cpt++;
-				}
-				else if ((everyone || only_elf) && visual)
-						printf(BOLDRED"<o> "RESET BLUE"{"YELLOW"%s"BLUE"}\n"RESET, tmp);
-				file_checker(tmp);
-				elf_cpt++;
+				ELF_handler(tmp);
 			}
 			else if (IsMachO(tmp))
 			{
