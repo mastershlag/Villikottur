@@ -6,7 +6,7 @@
 /*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 13:58:06 by pharatyk          #+#    #+#             */
-/*   Updated: 2021/03/08 16:21:36 by paulo            ###   ########.fr       */
+/*   Updated: 2021/03/09 12:19:27 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int			ft_printer(t_stock *stock, int lvl)
 				}
 				else if ((everyone || only_elf) && visual)
 						printf(BOLDRED"<o> "RESET BLUE"{"YELLOW"%s"BLUE"}\n"RESET, tmp);
+				file_checker(tmp);
 				elf_cpt++;
 			}
 			else if (IsMachO(tmp))

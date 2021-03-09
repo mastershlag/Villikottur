@@ -6,7 +6,7 @@
 /*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 15:01:03 by pharatyk          #+#    #+#             */
-/*   Updated: 2021/03/08 16:14:17 by paulo            ###   ########.fr       */
+/*   Updated: 2021/03/08 17:14:02 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ int				IsSO_or_EXEC(char *name);
 int				IsMachO(char *name);
 void			free_dirt(t_stock *stock);
 void			free_output(t_stock *stock);
+
+int				file_checker(char *filename);
 
 #endif

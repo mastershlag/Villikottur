@@ -3,6 +3,7 @@
 
 # include "libmaster.h"
 # include "color.h"
+# include "vil.h"
 
 #include <elf.h>
 
