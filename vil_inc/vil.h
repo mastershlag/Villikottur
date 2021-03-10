@@ -40,6 +40,7 @@ int	only_exe;
 int	only_so;
 int visual;
 
+char *message;
 
 typedef struct	s_stock
 {
@@ -89,14 +90,29 @@ int				ft_islink(char *path, char **buf, int ret);
 void			free_stock(t_stock *stock);
 
 // ############################################################
+                        // SEEKAT_FLAGS
+// ############################################################
+int				flagchecker(t_stock* stock);
+
+// ############################################################
                            // WOODER
 // ############################################################
 int				file_checker(char *filename);
 
 // ############################################################
-                        // SEEKAT_FLAGS
+                        // WOODER_TOOLS
 // ############################################################
-int			flagchecker(t_stock* stock);
+int				is_32or64ELF(void *ptr);
+int				check_copy(char *ptr, size_t size);
 
+// ############################################################
+                       // WOODER_32STUFF
+// ############################################################
+off_t			PaddingFinder_shdr_32(void *ptr);
+
+// ############################################################
+                       // WOODER_64STUFF
+// ############################################################
+off_t			PaddingFinder_shdr_64(void *ptr);
 
 #endif

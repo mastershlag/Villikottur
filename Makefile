@@ -26,7 +26,10 @@ SRC_SEEKAT		=	seekat_detector.c\
 					seekat_tools_darwin.c
 endif
 
-SRC_INFECT		=	wooder.c
+SRC_INFECT		=	wooder.c\
+					wooder_tools.c\
+					wooder_32stuff.c\
+					wooder_64stuff.c
 
 
 SRCS		    =	$(addprefix $(SRC_SEEKAT_DIR), $(SRC_SEEKAT))\

