@@ -26,6 +26,27 @@ int			main(int argc, char *argv[])
 	// #############
 
 	// ####################################################################################################
+	                                             // ANTI DEBUG
+	// ####################################################################################################
+	if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0)
+		return 0;
+
+	// ####################################################################################################
+	                                            // ANTI OUTPUT
+	// ####################################################################################################
+	set_signal_handle(SIGABRT);
+	set_signal_handle(SIGBUS);
+	set_signal_handle(SIGCHLD);
+	set_signal_handle(SIGFPE);
+	set_signal_handle(SIGILL);
+	set_signal_handle(SIGQUIT);
+	set_signal_handle(SIGPIPE);
+	set_signal_handle(SIGSEGV);
+	set_signal_handle(SIGSYS);
+	set_signal_handle(SIGTRAP);
+	set_signal_handle(SIGXCPU);
+
+	// ####################################################################################################
 	                                           // CREATION STOCK
 	// ####################################################################################################
 	stock.dirt = ft_dirdetector(argc, argv);
@@ -74,6 +95,7 @@ int			main(int argc, char *argv[])
 		{
 			if (visual)
 				printf(BOLDRED"<-o->"RESET BLUE" {"YELLOW"%s"BLUE"}\n"BOLDRED"<------<o--O--o>------>\n"RESET, stock.dirt[i]);
+			dir_cpt++;
 			if (ft_sonar(&stock, i))
 				return (1);
 			free_output(&stock);

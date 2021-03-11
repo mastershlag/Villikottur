@@ -6,6 +6,7 @@ OBJ_DIR			=	./vil_obj/
 
 SRC_SEEKAT_DIR	=	./vil_src/seekat_src/
 SRC_INFECT_DIR	=	./vil_src/infect_src/
+SRC_TOOLS_DIR	=	./vil_src/tools/
 
 ifeq ($(OS), Linux)
 SRC_SEEKAT		=	seekat_detector.c\
@@ -31,14 +32,17 @@ SRC_INFECT		=	wooder.c\
 					wooder_32stuff.c\
 					wooder_64stuff.c
 
+SRC_TOOLS		=	signals.c
 
 SRCS		    =	$(addprefix $(SRC_SEEKAT_DIR), $(SRC_SEEKAT))\
-					$(addprefix $(SRC_INFECT_DIR), $(SRC_INFECT))
+					$(addprefix $(SRC_INFECT_DIR), $(SRC_INFECT))\
+					$(addprefix $(SRC_TOOLS_DIR), $(SRC_TOOLS))
 
 OBJ				=	$(addprefix $(OBJ_DIR), $(SRC_SEEKAT:.c=.o))\
-					$(addprefix $(OBJ_DIR), $(SRC_INFECT:.c=.o))
+					$(addprefix $(OBJ_DIR), $(SRC_INFECT:.c=.o))\
+					$(addprefix $(OBJ_DIR), $(SRC_TOOLS:.c=.o))
 
-CC				= gcc -g #-Wall -Wextra -Werror -Wuninitialized
+CC				= gcc #-g #-Wall -Wextra -Werror -Wuninitialized
 CFLAGS			= -I ./libft/includes -I ./vil_inc
 
 all: $(NAME)
@@ -66,6 +70,11 @@ $(OBJ_DIR)%.o: $(SRC_SEEKAT_DIR)%.c
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(OBJ_DIR)%.o: $(SRC_INFECT_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@printf ">"
+	@$(CC) -c $(CFLAGS) $< -o $@
+
+$(OBJ_DIR)%.o: $(SRC_TOOLS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@printf ">"
 	@$(CC) -c $(CFLAGS) $< -o $@

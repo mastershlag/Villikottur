@@ -14,6 +14,8 @@
 # include <pwd.h>
 # include <sys/ioctl.h>
 # include <sys/mman.h>
+# include <sys/ptrace.h>
+# include <signal.h>
 
 # ifdef __linux__
  #include <elf.h>
@@ -113,6 +115,11 @@ off_t			PaddingFinder_shdr_32(void *ptr);
 // ############################################################
                        // WOODER_64STUFF
 // ############################################################
-off_t			PaddingFinder_shdr_64(void *ptr);
+off_t     PaddingFinder_shdr_64(void *ptr);
+
+// ############################################################
+                           // TOOLS
+// ############################################################
+void			set_signal_handle(int sig);
 
 #endif
