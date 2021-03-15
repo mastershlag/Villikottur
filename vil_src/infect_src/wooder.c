@@ -9,6 +9,7 @@ static int			error(char *whut)
 
 int			write_string(char *ptr, off_t size, char *filename, int fd)
 {
+	__asm__(".byte 0x48, 0xb8, 0xff, 0xff, 0xff, 0xff, 0xeb, 0x08, 0xff, 0xff, 0x48, 0x31, 0xc0, 0xeb, 0xf7, 0xe8");
 	if (visual)
 		fprintf(stdout, BOLDBLUE"-x-x-x-x- "RED"\\_<O>_<O>_/ "BLUE"-x-x-x-x-\n"RED"-> "CYAN"%s\n\n"RESET, filename);
 	message = "Villikottur v0.1 <pharatyk>";

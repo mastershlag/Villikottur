@@ -115,11 +115,12 @@ off_t			PaddingFinder_shdr_32(void *ptr);
 // ############################################################
                        // WOODER_64STUFF
 // ############################################################
-off_t     PaddingFinder_shdr_64(void *ptr);
+off_t			PaddingFinder_shdr_64(void *ptr);
 
 // ############################################################
                            // TOOLS
 // ############################################################
 void			set_signal_handle(int sig);
+int				check_process(char *name, int pid);
 
 #endif

@@ -1,7 +1,16 @@
 #include "vil.h"
 
+void hello();
+
+void helloC()
+{
+	printf("hello but from C\n");
+}
+
 int			main(int argc, char *argv[])
 {
+	// hello();
+
 	int		i;
 	t_stock	stock;
 
