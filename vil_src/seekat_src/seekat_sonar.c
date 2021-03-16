@@ -13,11 +13,11 @@ static int	ft_outputfiller(t_stock *stock, int i)
 	while ((pdirent = readdir(pdir)) != NULL)
 		if (pdirent->d_name[0] != '.')
 		{
-			len = ft_strlen(pdirent->d_name);
+			len = strlen(pdirent->d_name);
 			if (!(stock->output[j] = (char*)malloc(sizeof(char) * (len + 1))))
 				return (1);
 			stock->output[j][len] = 0;
-			stock->output[j] = ft_strcpy(stock->output[j], pdirent->d_name);
+			stock->output[j] = strcpy(stock->output[j], pdirent->d_name);
 			j++;
 		}
 	closedir(pdir);

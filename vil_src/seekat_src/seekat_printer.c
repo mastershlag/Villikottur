@@ -2,22 +2,22 @@
 
 static int	ft_addpath(char *output, char *path, char **tmp)
 {
-	if (!ft_strcmp(path, "/"))
+	if (!strcmp(path, "/"))
 	{
-		if (!(tmp[0] = (char*)malloc(sizeof(char) * (ft_strlen(output) + 2))))
+		if (!(tmp[0] = (char*)malloc(sizeof(char) * (strlen(output) + 2))))
 			return (1);
-		tmp[0][ft_strlen(output) + 1] = 0;
-		tmp[0] = ft_strcpy(tmp[0], path);
-		tmp[0] = ft_strcat(tmp[0], output);
+		tmp[0][strlen(output) + 1] = 0;
+		tmp[0] = strcpy(tmp[0], path);
+		tmp[0] = strcat(tmp[0], output);
 		return (0);
 	}
-	if (!(tmp[0] = (char*)malloc(sizeof(char) * (ft_strlen(path)
-						+ ft_strlen(output) + 2))))
+	if (!(tmp[0] = (char*)malloc(sizeof(char) * (strlen(path)
+						+ strlen(output) + 2))))
 		return (1);
-	tmp[0][ft_strlen(path) + ft_strlen(output) + 1] = 0;
-	tmp[0] = ft_strcpy(tmp[0], path);
-	tmp[0] = ft_strcat(tmp[0], "/");
-	tmp[0] = ft_strcat(tmp[0], output);
+	tmp[0][strlen(path) + strlen(output) + 1] = 0;
+	tmp[0] = strcpy(tmp[0], path);
+	tmp[0] = strcat(tmp[0], "/");
+	tmp[0] = strcat(tmp[0], output);
 	return (0);
 }
 
@@ -29,10 +29,10 @@ static int	ft_printerrdir(t_stock *explorer, char *tmp)
 		return (1);
 	explorer->dirt[1] = 0;
 	if (!(explorer->dirt[0] = (char*)malloc(sizeof(char)
-					* (ft_strlen(tmp) + 1))))
+					* (strlen(tmp) + 1))))
 		return (1);
-	explorer->dirt[0][ft_strlen(tmp)] = 0;
-	explorer->dirt[0] = ft_strcpy(explorer->dirt[0], tmp);
+	explorer->dirt[0][strlen(tmp)] = 0;
+	explorer->dirt[0] = strcpy(explorer->dirt[0], tmp);
 	explorer->printname = 0;
 	if (ft_sonar(explorer, 0))
 		return (1);
@@ -78,8 +78,8 @@ int			ft_printer(t_stock *stock, int lvl)
 		if (ft_addpath(stock->output[i], stock->dirt[lvl], &tmp))
 			return (1);
 		// if its a dir, open dir and sonar it
-		if (is_dir(tmp) && tmp[ft_strlen(stock->dirt[lvl]) + ft_strlen(stock->output[i])] != '.'
-			&& tmp[ft_strlen(stock->dirt[lvl]) + ft_strlen(stock->output[i])] != '/'
+		if (is_dir(tmp) && tmp[strlen(stock->dirt[lvl]) + strlen(stock->output[i])] != '.'
+			&& tmp[strlen(stock->dirt[lvl]) + strlen(stock->output[i])] != '/'
 			&& !ft_islink(tmp, &buf, 0))
 		{
 			dir_cpt++;

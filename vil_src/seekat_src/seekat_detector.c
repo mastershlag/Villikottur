@@ -9,7 +9,7 @@ static char	**ft_nodir(void)
 	dirt[1] = 0;
 	if (!(dirt[0] = (char*)malloc(sizeof(char) * 5)))
 		return (0);
-	dirt[0] = ft_strcpy(dirt[0], "/tmp");
+	dirt[0] = strcpy(dirt[0], "/tmp");
 	return (dirt);
 }
 
@@ -28,9 +28,9 @@ char		**ft_dirdetector(int argc, char **argv)
 	i = 0;
 	while (argv[++i])
 	{
-		if (!(dirt[inc] = (char*)malloc(sizeof(char) * (ft_strlen(argv[i]) + 1))))
+		if (!(dirt[inc] = (char*)malloc(sizeof(char) * (strlen(argv[i]) + 1))))
 			return (0);
-		dirt[inc] = ft_strcpy(dirt[inc], argv[i]);
+		dirt[inc] = strcpy(dirt[inc], argv[i]);
 		inc++;
 		test = 1;
 	}
