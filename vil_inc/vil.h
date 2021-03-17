@@ -30,9 +30,9 @@
 # define MAGIC_MACHO5	"\xcf\xfa\xed\xfe"
 
 // ############################################################
-                           // WOODER
+													 // WOODER
 // ############################################################
-int 		encr_bundle_size;			// size of decryption bundle
+int 		message_size;					// size of decryption bundle
 off_t		textafter;					  // offset of the segment just after .text segment
 off_t		parasite_offset;			// Parasite entry point (if parasite is .so)
 u_int64_t	parasite_size;			// Size of parasite
@@ -72,23 +72,23 @@ typedef struct	s_basiks
 }				t_basiks;
 
 // ############################################################
-                      // SEEKAT_DETECTOR
+											// SEEKAT_DETECTOR
 // ############################################################
 char			**ft_dirdetector(int c, char **v);
 
 // ############################################################
-                        // SEEKAT_SONAR
+												// SEEKAT_SONAR
 // ############################################################
 int				ft_sonar(t_stock *stock, int i);
 
 // ############################################################
-                       // SEEKAT_PRINTER
+											 // SEEKAT_PRINTER
 // ############################################################
 void			ELF_handler(char *tmp);
 int				ft_printer(t_stock *stock, int lvl);
 
 // ############################################################
-                        // SEEKAT_TOOLS
+												// SEEKAT_TOOLS
 // ############################################################
 char			*ft_ona(char *lol);
 void			free_output(t_stock *stock);
@@ -103,17 +103,17 @@ int				ft_islink(char *path, char **buf, int ret);
 void			free_stock(t_stock *stock);
 
 // ############################################################
-                        // SEEKAT_FLAGS
+												// SEEKAT_FLAGS
 // ############################################################
 int				flagchecker(t_stock* stock);
 
 // ############################################################
-                           // WOODER
+													 // WOODER
 // ############################################################
 int				file_checker(char *filename);
 
 // ############################################################
-                        // WOODER_TOOLS
+												// WOODER_TOOLS
 // ############################################################
 int				is_32or64ELF(void *ptr);
 int				check_copy(char *ptr, size_t size);
@@ -122,14 +122,15 @@ int				error(char *whut);
 void			AddrPatcher(u_int8_t *parasite, long placeholder, long address);
 
 // ############################################################
-                       // WOODER_64STUFF
+											 // WOODER_64STUFF
 // ############################################################
-off_t			PaddingFinder_shdr_64(void *ptr);
 off_t			PaddingSizeFinder_64_v2(void *ptr);
 void			SHT_Patcher_64(void *ptr);
+off_t     PaddingFinder_shdr_64_v2(void *ptr);
+void      SHT_PHT_Patcher_64(void *ptr);
 
 // ############################################################
-                           // TOOLS
+													 // TOOLS
 // ############################################################
 void			set_signal_handle(int sig);
 int				check_process(char *name, int pid);

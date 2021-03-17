@@ -29,7 +29,7 @@ int		write_string(char *ptr, off_t size, char *filename, int fd)
 		return (0);
 	}
 
-	encr_bundle_size = strlen(message);
+	message_size = strlen(message);
 	Elf64_Ehdr *ehdr = (Elf64_Ehdr *) ptr;
 	// Identify the binary & SKIP Relocatable, files and 32-bit class of binaries
     if (ehdr->e_type == ET_REL || ehdr->e_type == ET_CORE)
@@ -46,9 +46,10 @@ int		write_string(char *ptr, off_t size, char *filename, int fd)
 	}
 
 	off_t	original_entry_point = ehdr->e_entry;
-	ehdr->e_entry 	+= (parasite_offset - original_entry_point + encr_bundle_size);
+	ehdr->e_entry 	+= (parasite_offset + message_size - original_entry_point);
 	// Patch SHT
 	SHT_Patcher_64(ptr);
+
 
 	// ###################################################################################################################
 										// PARASITE PATCHING + HOST INFESTATION
@@ -64,8 +65,18 @@ int		write_string(char *ptr, off_t size, char *filename, int fd)
 	if ((fd2 = open("woody", O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
 		return (1);
 
+	// ###################################################################################################################
+	// //  MEM STRAT
+	// // passage d'informations pour le decryptage
+	// memmove((ptr + parasite_offset), message, message_size);
+
+	// // Inject parasite in Host memory
+	// memmove((ptr + parasite_offset + message_size), parasite_code, parasite_size);
+	// write(fd2, ptr, size);
+	// ###################################################################################################################
+
 	write(fd2, ptr, (parasite_offset));
-	write(fd2, message, encr_bundle_size);
+	write(fd2, message, message_size);
 	write(fd2, parasite_code, parasite_size);
 	for (off_t i = 0; i < (padding_size - parasite_full_size); ++i)
 		write(fd2, "\0", 1);
